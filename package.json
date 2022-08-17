@@ -2,11 +2,16 @@
   "name": "order",
   "version": "1.0.0",
   "dependencies": {
+    "commander": "^9.4.0",
     "kafkajs": "^2.2.0",
     "lodash": "^4.17.21",
     "log4js": "^6.6.1",
     "moment": "^2.29.4",
-    "neo4j-driver": "^4.4.7",
-    "commander": "^9.4.0"
+    "neo4j-driver": "^4.4.7"
+  },
+  "devDependencies": {
+    "eslint": "^8.22.0",
+    "eslint-config-airbnb-base": "^15.0.0",
+    "eslint-plugin-import": "^2.26.0"
   }
 }

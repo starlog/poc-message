@@ -22,14 +22,18 @@ async function processMessage(message, producer, session) {
   try {
     logger.debug(`RECEIVED=${message.value.toString()}`);
     let encodedMessage = JSON.parse(message.value.toString());
+
+    // Query graph database.
     let query = `match (a)-[r {code:'${encodedMessage.process}', rank:${encodedMessage.step}}]->(b) return a,b,r order by r.rank`;
     logger.debug(`QUERY=${query}`);
     let data = await session.run(query);
 
+    // Next Step exists.
     if (data.records.length > 0) {
       logger.debug(`DATA from Neo4j=${JSON.stringify(data.records[0]._fields[1])}`);
       logger.debug(`Routing message to ${data.records["0"]._fields["1"].properties.kafkaTopic}`);
 
+      // Generate message.
       let sendMessage = {
         key: 'order',
         value: {
@@ -49,6 +53,7 @@ async function processMessage(message, producer, session) {
       })
       sendMessage.value = JSON.stringify(sendMessage.value);
 
+      // Sending message.
       await producer.send({
         topic: `${data.records["0"]._fields["1"].properties.kafkaTopic}-topic`,
         messages: [
