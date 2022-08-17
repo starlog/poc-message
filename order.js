@@ -62,7 +62,7 @@ async function processMessage(message, producer, session) {
         ],
       });
     } else {
-      logger.debug(`END of process. Final messag is ${JSON.stringify(encodedMessage, null, 2)}`);
+      logger.debug(`END of process. Final message is ${JSON.stringify(encodedMessage, null, 2)}`);
     }
   } catch (ex) {
     logger.error(ex);
@@ -71,7 +71,7 @@ async function processMessage(message, producer, session) {
 
 program
   .name('order')
-  .description('Message dispather')
+  .description('Message dispatcher')
   .version('0.0.1');
 
 program.command('start')
