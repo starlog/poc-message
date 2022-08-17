@@ -1,16 +1,17 @@
-const {Command} = require('commander')
-const program = new Command()
-const {Kafka, Partitioners} = require('kafkajs')
+const { Command } = require('commander');
+
+const program = new Command();
+const { Kafka, Partitioners } = require('kafkajs');
 
 const kafka = new Kafka({
   clientId: 'start-process',
-  brokers: ['localhost:9093']
-})
+  brokers: ['localhost:9093'],
+});
 
 program
   .name('send')
   .description('Start washswat message process')
-  .version('0.0.1')
+  .version('0.0.1');
 
 program.command('send')
   .description('Start message process (P_001..P_007)\n'
@@ -23,8 +24,8 @@ program.command('send')
     + 'P_007: 중고 판매 세탁후 출고\n')
   .argument('<string>', 'Message type')
   .action(async (str) => {
-    const producer = kafka.producer({createPartitioner: Partitioners.LegacyPartitioner})
-    await producer.connect()
+    const producer = kafka.producer({ createPartitioner: Partitioners.LegacyPartitioner });
+    await producer.connect();
 
     await producer.send({
       topic: 'order-topic',
@@ -41,12 +42,12 @@ program.command('send')
               history: [],
               sid: '1234567890',
               uid: 3456,
-              address: 'Some address data'
-            }
-          })
+              address: 'Some address data',
+            },
+          }),
         },
       ],
-    })
+    });
     console.log('done');
     process.exit(0);
   });

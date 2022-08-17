@@ -1,69 +1,59 @@
-'use strict';
-
-exports.getNodes = function(){
-  return nodes;
-}
-
-exports.getRelations = function(){
-  return relations;
-}
-
 const nodes = [
   {
     title: 'order',
     kTitle: '주문',
     kafkaTopic: 'order',
     include: [
-      'sid', 'uid', 'orderDate', 'description', 'photoList'
+      'sid', 'uid', 'orderDate', 'description', 'photoList',
     ],
-    hourLimit: 1
+    hourLimit: 1,
   },
   {
     title: 'lgs',
     kTitle: '배송',
     kafkaTopic: 'lgs',
     include: [
-      'sid', 'uid', 'orderDate', 'description', 'photoList', 'address'
+      'sid', 'uid', 'orderDate', 'description', 'photoList', 'address',
     ],
-    hourLimit: 48
+    hourLimit: 48,
   },
   {
     title: 'laundry',
     kTitle: '세탁',
     kafkaTopic: 'laundry',
     include: [
-      'sid', 'uid', 'orderDate', 'description', 'photoList'
+      'sid', 'uid', 'orderDate', 'description', 'photoList',
     ],
-    hourLimit: 24
+    hourLimit: 24,
   },
   {
     title: 'storage',
     kTitle: '보관',
     kafkaTopic: 'storage',
     include: [
-      'sid', 'uid', 'orderDate', 'description', 'photoList'
+      'sid', 'uid', 'orderDate', 'description', 'photoList',
     ],
-    hourLimit: 0
+    hourLimit: 0,
   },
   {
     title: 'secondhand',
     kTitle: '중고',
     kafkaTopic: 'secondhand',
     include: [
-      'sid', 'uid', 'orderDate', 'description', 'photoList'
+      'sid', 'uid', 'orderDate', 'description', 'photoList',
     ],
-    hourLimit: 0
+    hourLimit: 0,
   },
   {
     title: 'billing',
     kTitle: '빌링',
     kafkaTopic: 'billing',
     include: [
-      'sid', 'uid', 'orderDate', 'amount'
+      'sid', 'uid', 'orderDate', 'amount',
     ],
-    hourLimit: 24
+    hourLimit: 24,
   },
-]
+];
 
 const relations = [
   {
@@ -72,25 +62,25 @@ const relations = [
     steps: [
       {
         from: 'order',
-        to: 'lgs'
+        to: 'lgs',
       },
       {
         from: 'lgs',
-        to: 'laundry'
+        to: 'laundry',
       },
       {
         from: 'laundry',
-        to: 'billing'
+        to: 'billing',
       },
       {
         from: 'billing',
-        to: 'laundry'
+        to: 'laundry',
       },
       {
         from: 'laundry',
-        to: 'lgs'
+        to: 'lgs',
       },
-    ]
+    ],
   },
   {
     process: 'P_002',
@@ -98,25 +88,25 @@ const relations = [
     steps: [
       {
         from: 'order',
-        to: 'lgs'
+        to: 'lgs',
       },
       {
         from: 'lgs',
-        to: 'laundry'
+        to: 'laundry',
       },
       {
         from: 'laundry',
-        to: 'billing'
+        to: 'billing',
       },
       {
         from: 'billing',
-        to: 'laundry'
+        to: 'laundry',
       },
       {
         from: 'laundry',
-        to: 'storage'
+        to: 'storage',
       },
-    ]
+    ],
   },
   {
     process: 'P_003',
@@ -124,13 +114,13 @@ const relations = [
     steps: [
       {
         from: 'order',
-        to: 'storage'
+        to: 'storage',
       },
       {
         from: 'storage',
-        to: 'lgs'
+        to: 'lgs',
       },
-    ]
+    ],
   },
   {
     process: 'P_004',
@@ -138,21 +128,21 @@ const relations = [
     steps: [
       {
         from: 'order',
-        to: 'lgs'
+        to: 'lgs',
       },
       {
         from: 'lgs',
-        to: 'storage'
+        to: 'storage',
       },
       {
         from: 'storage',
-        to: 'billing'
+        to: 'billing',
       },
       {
         from: 'billing',
-        to: 'storage'
+        to: 'storage',
       },
-    ]
+    ],
   },
   {
     process: 'P_005',
@@ -160,13 +150,13 @@ const relations = [
     steps: [
       {
         from: 'order',
-        to: 'lgs'
+        to: 'lgs',
       },
       {
         from: 'lgs',
-        to: 'secondhand'
+        to: 'secondhand',
       },
-    ]
+    ],
   },
   {
     process: 'P_006',
@@ -174,21 +164,21 @@ const relations = [
     steps: [
       {
         from: 'order',
-        to: 'secondhand'
+        to: 'secondhand',
       },
       {
         from: 'secondhand',
-        to: 'billing'
+        to: 'billing',
       },
       {
         from: 'billing',
-        to: 'secondhand'
+        to: 'secondhand',
       },
       {
         from: 'secondhand',
-        to: 'lgs'
+        to: 'lgs',
       },
-    ]
+    ],
   },
   {
     process: 'P_007',
@@ -196,24 +186,28 @@ const relations = [
     steps: [
       {
         from: 'order',
-        to: 'secondhand'
+        to: 'secondhand',
       },
       {
         from: 'secondhand',
-        to: 'billing'
+        to: 'billing',
       },
       {
         from: 'billing',
-        to: 'secondhand'
+        to: 'secondhand',
       },
       {
         from: 'secondhand',
-        to: 'laundry'
+        to: 'laundry',
       },
       {
         from: 'laundry',
-        to: 'lgs'
+        to: 'lgs',
       },
-    ]
+    ],
   },
-]
+];
+
+exports.getNodes = () => nodes;
+
+exports.getRelations = () => relations;
