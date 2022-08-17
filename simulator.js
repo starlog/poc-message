@@ -11,6 +11,7 @@ async function processMessage(message, producer, kafkaSetup, logger) {
     logger.debug(`RECEIVED=${message.value.toString()}`);
     const encodedMessage = JSON.parse(message.value.toString());
 
+    // Assemble return message (After process done)
     const sendMessage = {
       key: 'order',
       value: {
@@ -29,8 +30,9 @@ async function processMessage(message, producer, kafkaSetup, logger) {
       count: encodedMessage.step,
     });
     sendMessage.value = JSON.stringify(sendMessage.value);
-
     logger.debug(`'SENDING: ${JSON.stringify(sendMessage)}`);
+
+    // Actual sending
     await producer.send({
       topic: 'order-topic', // Always back to order
       messages: [sendMessage],
@@ -47,23 +49,23 @@ program
 
 program.command('run')
   .description('Run a simulated message handler for domain.')
-  .argument('<string>', 'domain name(lgs, laundry, billing, storage, secondhand)')
+  .argument('<string>', 'domain name(lgs, laundry, billing, storage, secondhand, snt)')
   .action(async (str) => {
+    // Initialize
     const kafkaSetup = {
       title: str,
     };
-
     const kafka = new Kafka({
       clientId: `${kafkaSetup.title}-client`,
       brokers: ['localhost:9093'],
     });
-
     const logger = log4js.getLogger(kafkaSetup.title);
     logger.level = 'debug';
-
     const producer = kafka.producer({
       createPartitioner: Partitioners.LegacyPartitioner,
     });
+
+    // Connect to Kafka
     await producer.connect();
     const consumer = kafka.consumer({ groupId: `${kafkaSetup.title}-group` });
     await consumer.connect();

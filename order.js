@@ -31,9 +31,7 @@ async function processMessage(message, producer, session) {
 
     // Next Step exists.
     if (data.records.length > 0) {
-      // eslint-disable-next-line no-underscore-dangle
       logger.debug(`DATA from Neo4j=${JSON.stringify(data.records[0]._fields[1])}`);
-      // eslint-disable-next-line no-underscore-dangle
       logger.debug(`Routing message to ${data.records['0']._fields['1'].properties.kafkaTopic}`);
 
       // Generate message.
@@ -50,7 +48,6 @@ async function processMessage(message, producer, session) {
       };
       sendMessage.value.payLoad.history.push({
         from: kafkaSetup.title,
-        // eslint-disable-next-line no-underscore-dangle
         to: data.records['0']._fields['1'].properties.kafkaTopic,
         time: moment().valueOf(),
         count: encodedMessage.step + 1,
@@ -59,7 +56,6 @@ async function processMessage(message, producer, session) {
 
       // Sending message.
       await producer.send({
-        // eslint-disable-next-line no-underscore-dangle
         topic: `${data.records['0']._fields['1'].properties.kafkaTopic}-topic`,
         messages: [
           sendMessage,

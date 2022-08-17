@@ -42,7 +42,7 @@ program.command('send')
               history: [],
               sid: '1234567890',
               uid: 3456,
-              address: 'Some address data',
+              address: '서울시 어쩌고 저쩌고',
             },
           }),
         },
