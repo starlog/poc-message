@@ -9,7 +9,7 @@ const data2 = require('./data/data_with_snt');
 function init() {
   return neo4j.driver(
     'neo4j://localhost',
-    neo4j.auth.basic('neo4j', 'madmax2'),
+    neo4j.auth.basic('neo4j', 'LongPassword1234!'),
   );
 }
 

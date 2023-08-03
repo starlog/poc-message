@@ -27,7 +27,7 @@ program.command('send')
     const producer = kafka.producer({ createPartitioner: Partitioners.LegacyPartitioner });
     await producer.connect();
 
-    await producer.send({
+    const result = await producer.send({
       topic: 'order-topic',
       messages: [
         {

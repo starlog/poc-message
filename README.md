@@ -80,5 +80,5 @@ docker-compose up -d
 
 neo4j Docker CLI
 ~~~
-docker run --publish=7474:7474 --publish=7687:7687 --volume=$HOME/neo4j/data:/data -d -e NEO4J_AUTH=neo4j/madmax2 neo4j
+docker run --publish=7474:7474 --publish=7687:7687 --volume=$HOME/neo4j/data:/data -d -e NEO4J_AUTH=neo4j/LongPassword1234! neo4j
 ~~~

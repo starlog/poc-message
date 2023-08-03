@@ -62,6 +62,10 @@ async function processMessage(message, producer, session) {
         ],
       });
     } else {
+      // eslint-disable-next-line no-plusplus
+      for (let i = 0; i < encodedMessage.payLoad.history.length; i++) {
+        encodedMessage.payLoad.history[i].time = moment(encodedMessage.payLoad.history[i].time).format('YYYY-MM-DD HH:mm:ss.SSS');
+      }
       logger.debug(`END of process. Final message is ${JSON.stringify(encodedMessage, null, 2)}`);
     }
   } catch (ex) {
@@ -79,7 +83,7 @@ program.command('start')
   .action(async () => {
     const neo4jDriver = neo4j.driver(
       'neo4j://localhost',
-      neo4j.auth.basic('neo4j', 'madmax2'),
+      neo4j.auth.basic('neo4j', 'LongPassword1234!'),
     );
     const session = neo4jDriver.session();
 
